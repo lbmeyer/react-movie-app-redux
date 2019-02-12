@@ -9,8 +9,6 @@ const App = () => {
   return (
     <div>
       <Header />
-      <HeroImage />
-      <SearchBar />
       <Home />
     </div>
   )
