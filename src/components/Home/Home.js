@@ -101,10 +101,10 @@ class Home extends Component {
         ) : null }
         <div className="rmdb-home-grid">
           <FourColGrid
-            header={this.state.searchTerm ? 'Search Result' : 'Popular Movies'}
-            loading={this.state.loading}
+            header={searchTerm ? 'Search Result' : 'Popular Movies'}
+            loading={loading}
           >
-            {this.state.movies.map((el, i) => {
+            {movies.map((el, i) => {
               return (
                 <MovieThumb 
                   key={i} 
@@ -116,8 +116,8 @@ class Home extends Component {
               )
             })}
           </FourColGrid>
-          {this.state.loading ? <Spinner /> : null}
-          {(this.state.currentPage < this.state.totalPages && !this.state.load) ?
+          {loading ? <Spinner /> : null}
+          {(currentPage < totalPages && !loading) ?
             <LoadMoreBtn text="Load More" onClick={this.loadMoreItems} />
             : null }
         </div>
