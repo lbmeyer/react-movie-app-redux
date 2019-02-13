@@ -7,6 +7,7 @@ import MovieInfoBar from '../elements/MovieInfoBar/MovieInfoBar';
 import FourColGrid from '../elements/FourColGrid/FourColGrid';
 import Spinner from '../elements/Spinner/Spinner';
 import Actor from '../elements/Actor/Actor';
+import NotFound from '../elements/NotFound/NotFound';
 
 class Movie extends Component {
   state = {
@@ -17,10 +18,17 @@ class Movie extends Component {
   }
 
   componentDidMount() {
-    this.setState({ loading: true })
-    // First fetch the movie...
-    const endpoint = `${API_URL}movie/${this.props.match.params.movieId}?api_key=${API_KEY}&language=en-US`;
-    this.fetchItems(endpoint);
+    const { movieId } = this.props.match.params;
+
+    if (localStorage.getItem(`${movieId}`)) {
+      const state = JSON.parse(localStorage.getItem(`${movieId}`));
+      this.setState({ ...state });
+    } else {
+      this.setState({ loading: true })
+      // First fetch the movie...
+      const endpoint = `${API_URL}movie/${movieId}?api_key=${API_KEY}&language=en-US`;
+      this.fetchItems(endpoint);
+    }
   }
 
   fetchItems = endpoint => {
@@ -43,6 +51,8 @@ class Movie extends Component {
                   actors: res.cast,
                   directors,
                   loading: false
+                }, () => {
+                  localStorage.setItem(`${this.props.match.params.movieId}`, JSON.stringify(this.state));
                 })
               })
           })
@@ -72,11 +82,11 @@ class Movie extends Component {
               <FourColGrid header={'Actors'}>
                 {actors.map( (element, i) => (
                   <Actor key={i} actor={element} />
-                ))}
+                  ))}
               </FourColGrid>
           </div>
           : null }
-          {!actors && !loading ? <h1>No movie found</h1> : null }
+          {!actors && !loading ? <NotFound /> : null }
           {loading ? <Spinner /> : null}
       </div>
     )

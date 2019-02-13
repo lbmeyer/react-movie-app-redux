@@ -1,6 +1,6 @@
 import React from 'react';
 import { IMAGE_BASE_URL } from '../../../config';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import './Actor.css';
 
 const Actor = ({ actor }) => {
@@ -20,5 +20,9 @@ const Actor = ({ actor }) => {
     </div>
   );
 };
+
+Actor.propTypes = {
+  actor: PropTypes.object
+}
 
 export default Actor;
