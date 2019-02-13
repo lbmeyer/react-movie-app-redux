@@ -35,7 +35,7 @@ class Home extends Component {
       .then(endpoint)
       .then(res => res.json())
       .then(result => {
-        // console.log(result);
+        console.log(result);
         this.setState({
           movies: [...this.state.movies, ...result.results],
           heroImage: this.state.heroImage || result.results[0], // if this.state.heroImage is null, use result.result[0]
