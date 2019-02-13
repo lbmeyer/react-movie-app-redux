@@ -5,18 +5,18 @@ import './SearchBar.css';
 class SearchBar extends Component {
   state = {
     value: ''
-  }
+  };
 
   timeout = null;
 
   doSearch = e => {
-    this.setState({value: e.target.value});
+    this.setState({ value: e.target.value });
     clearTimeout(this.timeout);
 
-    this.timeout = setTimeout( () => {
+    this.timeout = setTimeout(() => {
       this.props.callback(this.state.value);
-    }, 500)
-  }
+    }, 500);
+  };
 
   render() {
     return (
@@ -32,7 +32,7 @@ class SearchBar extends Component {
           />
         </div>
       </div>
-    )
+    );
   }
 }
 

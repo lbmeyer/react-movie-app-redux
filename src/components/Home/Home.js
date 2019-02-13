@@ -47,17 +47,15 @@ class Home extends Component {
   };
 
   loadMoreItems = () => {
+    const { searchTerm, currentPage } = this.state;
     let endpoint = '';
     this.setState({ loading: true });
 
     // if not searching for a movie, api get the next page of movies
-    if (this.setState.searchTerm === '') {
-      endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${this
-        .state.currentPage + 1}`;
+    if (searchTerm === '') {
+      endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage + 1}`;
     } else {
-      endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query${
-        this.state.searchTerm
-      }&page=${this.state.currentPage + 1}`;
+      endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${searchTerm}&page=${currentPage + 1}`;
     }
     this.fetchItems(endpoint);
   };
@@ -101,9 +99,28 @@ class Home extends Component {
             <SearchBar callback={this.searchItems} />
           </div>
         ) : null }
-        <FourColGrid />
-        <Spinner />
-        <LoadMoreBtn />
+        <div className="rmdb-home-grid">
+          <FourColGrid
+            header={this.state.searchTerm ? 'Search Result' : 'Popular Movies'}
+            loading={this.state.loading}
+          >
+            {this.state.movies.map((el, i) => {
+              return (
+                <MovieThumb 
+                  key={i} 
+                  clickable={true} 
+                  image={el.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}/${el.poster_path}` : `./images/no_image.jpg`} 
+                  movieId={el.id}
+                  movieName={el.original_title}
+                />
+              )
+            })}
+          </FourColGrid>
+          {this.state.loading ? <Spinner /> : null}
+          {(this.state.currentPage < this.state.totalPages && !this.state.load) ?
+            <LoadMoreBtn text="Load More" onClick={this.loadMoreItems} />
+            : null }
+        </div>
       </div>
     );
   }
