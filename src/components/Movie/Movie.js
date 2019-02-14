@@ -20,15 +20,10 @@ class Movie extends Component {
     // ES6 destructuring the props
     const { movieId } = this.props.match.params;
 
-    if (localStorage.getItem(`${movieId}`)) {
-      let state = JSON.parse(localStorage.getItem(`${movieId}`))
-      this.setState({ ...state })
-    } else {
-      this.setState({ loading: true })
-      // First fetch the movie ...
-      let endpoint = `${API_URL}movie/${movieId}?api_key=${API_KEY}&language=en-US`;
-      this.fetchItems(endpoint);
-    }
+    this.setState({ loading: true })
+    // First fetch the movie ...
+    let endpoint = `${API_URL}movie/${movieId}?api_key=${API_KEY}&language=en-US`;
+    this.fetchItems(endpoint);
   }
 
   fetchItems = (endpoint) => {
@@ -56,8 +51,6 @@ class Movie extends Component {
               actors: result.cast,
               directors,
               loading: false
-            }, () => {
-              localStorage.setItem(`${movieId}`, JSON.stringify(this.state));
             })
           })
         })
@@ -71,11 +64,8 @@ class Movie extends Component {
     const { movieName } = this.props.location;
     const { movie, directors, actors, loading } = this.state;
 
-    return (
-      // {movie ? <Spinner /> : null }
-      
+    return (      
       <div className="rmdb-movie">
-      {loading ? <Spinner /> : null}
         {movie ?
         <div>
           <Navigation movie={movieName} />

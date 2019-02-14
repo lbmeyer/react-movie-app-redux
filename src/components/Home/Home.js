@@ -26,8 +26,17 @@ class Home extends Component {
 
   componentDidMount() {
     if (localStorage.getItem('MoviesDB')) {
+      this.setState({ loading: true });
       const state = JSON.parse(localStorage.getItem('MoviesDB'));
-      this.setState({ ...state });
+      setTimeout(() => {
+        this.setState({
+          movies: state.movies,
+          heroImage: state.heroImage,
+          loading: false,
+          currentPage: state.currentPage,
+          totalPages: state.totalPages
+        });
+      }, 100);
     } else {
       this.setState({ loading: true });
       const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
@@ -41,16 +50,19 @@ class Home extends Component {
       .then(res => res.json())
       .then(result => {
         // console.log(result);
-        this.setState({
-          movies: [...this.state.movies, ...result.results],
-          heroImage: this.state.heroImage || result.results[0], // if this.state.heroImage is null, use result.result[0]
-          loading: false,
-          currentPage: result.page,
-          totalPages: result.total_pages
-        }, () => {
-          if (this.state.searchTerm === '')
-            localStorage.setItem('MoviesDB', JSON.stringify(this.state))
-        });
+        this.setState(
+          {
+            movies: [...this.state.movies, ...result.results],
+            heroImage: this.state.heroImage || result.results[0], // if this.state.heroImage is null, use result.result[0]
+            loading: false,
+            currentPage: result.page,
+            totalPages: result.total_pages
+          },
+          () => {
+            if (this.state.searchTerm === '')
+              localStorage.setItem('MoviesDB', JSON.stringify(this.state));
+          }
+        );
       });
   };
 
@@ -61,15 +73,17 @@ class Home extends Component {
 
     // if not searching for a movie, api get the next page of movies
     if (searchTerm === '') {
-      endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage + 1}`;
+      endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${currentPage +
+        1}`;
     } else {
-      endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${searchTerm}&page=${currentPage + 1}`;
+      endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${searchTerm}&page=${currentPage +
+        1}`;
     }
     this.fetchItems(endpoint);
   };
 
   searchItems = searchTerm => {
-    console.log(searchTerm)
+    console.log(searchTerm);
     let endpoint = '';
     this.setState({
       movies: [],
@@ -83,7 +97,7 @@ class Home extends Component {
       endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
     }
     this.fetchItems(endpoint);
-  }
+  };
 
   render() {
     const {
@@ -97,16 +111,19 @@ class Home extends Component {
 
     return (
       <div className="rmdb-home">
+        {loading ? <Spinner /> : null}
         {this.state.heroImage ? (
           <div>
             <HeroImage
-              image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${heroImage.backdrop_path}`}
+              image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${
+                heroImage.backdrop_path
+              }`}
               title={heroImage.original_title}
               text={heroImage.overview}
-            /> 
+            />
             <SearchBar callback={this.searchItems} />
           </div>
-        ) : null }
+        ) : null}
         <div className="rmdb-home-grid">
           <FourColGrid
             header={searchTerm ? 'Search Result' : 'Popular Movies'}
@@ -114,20 +131,23 @@ class Home extends Component {
           >
             {movies.map((el, i) => {
               return (
-                <MovieThumb 
-                  key={i} 
-                  clickable={true} 
-                  image={el.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}/${el.poster_path}` : `./images/no_image.jpg`} 
+                <MovieThumb
+                  key={i}
+                  clickable={true}
+                  image={
+                    el.poster_path
+                      ? `${IMAGE_BASE_URL}${POSTER_SIZE}/${el.poster_path}`
+                      : `./images/no_image.jpg`
+                  }
                   movieId={el.id}
                   movieName={el.original_title}
                 />
-              )
+              );
             })}
           </FourColGrid>
-          {loading ? <Spinner /> : null}
-          {(currentPage < totalPages && !loading) ?
+          {currentPage < totalPages && !loading ? (
             <LoadMoreBtn text="Load More" onClick={this.loadMoreItems} />
-            : null }
+          ) : null}
         </div>
       </div>
     );
