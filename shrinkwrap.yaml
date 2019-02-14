@@ -1,4 +1,5 @@
 dependencies:
+  prop-types: 15.7.2
   react: 16.8.1
   react-dom: 16.8.1
   react-fontawesome: 1.6.1
@@ -7881,6 +7882,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-f8Lku2z9kERjOCcnDOPm68EBJAO2K00Q5mSgPAUE/gJuBgsYLbVy6owSrtcHj90zt8PvW+z0qaIIgsIhHOa1Qw==
+  /prop-types/15.7.2:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.8.1
+    dev: false
+    resolution:
+      integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
   /property-information/5.0.1:
     dependencies:
       xtend: 4.0.1
@@ -10356,6 +10365,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  prop-types: ^15.7.2
   react: ^16.8.1
   react-dom: ^16.8.1
   react-fontawesome: ^1.6.1
