@@ -11,11 +11,13 @@ class SearchBar extends Component {
   timeout = null;
 
   doSearch = e => {
+    const { callback } = this.props;
+
     this.setState({ value: e.target.value });
     clearTimeout(this.timeout);
 
     this.timeout = setTimeout(() => {
-      this.props.callback(this.state.value);
+      callback(false, this.state.value);
     }, 500);
   };
 
