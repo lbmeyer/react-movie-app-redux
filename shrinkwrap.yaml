@@ -1,4 +1,5 @@
 dependencies:
+  axios: 0.18.0
   prop-types: 15.7.2
   react: 16.8.1
   react-dom: 16.8.1
@@ -1573,6 +1574,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
+  /axios/0.18.0:
+    dependencies:
+      follow-redirects: 1.7.0
+      is-buffer: 1.1.6
+    dev: false
+    resolution:
+      integrity: sha1-MtU+SFHv3AoRmTts0AB4nXDAUQI=
   /axobject-query/2.0.2:
     dependencies:
       ast-types-flow: 0.0.7
@@ -4061,6 +4069,14 @@ packages:
       node: '>=4.0'
     resolution:
       integrity: sha512-t2JCjbzxQpWvbhts3l6SH1DKzSrx8a+SsaVf4h6bG4kOXUuPYS/kg2Lr4gQSb7eemaHqJkOThF1BGyjlUkO1GQ==
+  /follow-redirects/1.7.0:
+    dependencies:
+      debug: 3.2.6
+    dev: false
+    engines:
+      node: '>=4.0'
+    resolution:
+      integrity: sha512-m/pZQy4Gj287eNy94nivy5wchN3Kp+Q5WgUPNy5lJSZ3sgkVKSYV/ZChMAQVIgx1SqfZ2zBZtPA2YlXIWxxJOQ==
   /for-in/0.1.8:
     dev: false
     engines:
@@ -10365,6 +10381,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
+  axios: ^0.18.0
   prop-types: ^15.7.2
   react: ^16.8.1
   react-dom: ^16.8.1

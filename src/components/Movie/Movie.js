@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { API_URL, API_KEY } from '../../config';
 import Navigation from '../elements/Navigation/Navigation';
 import MovieInfo from '../elements/MovieInfo/MovieInfo';
@@ -26,37 +27,34 @@ class Movie extends Component {
     this.fetchItems(endpoint);
   }
 
-  fetchItems = (endpoint) => {
-    // ES6 destructuring the props
+  fetchItems = async endpoint => {
     const { movieId } = this.props.match.params;
+    let creditsEndpoint = `${API_URL}movie/${movieId}/credits?api_key=${API_KEY}`;
 
-    fetch(endpoint)
-    .then(result => result.json())
-    .then(result => {
+    try {
+      let result = await axios.get(endpoint);
 
-      if (result.status_code) {
-        // If we don't find any movie
+      // if we have status_code from API, means movie wasn't found
+      if (result.data.status_code) {
         this.setState({ loading: false });
-      } else {
-        this.setState({ movie: result }, () => {
-          // ... then fetch actors in the setState callback function
-          let endpoint = `${API_URL}movie/${movieId}/credits?api_key=${API_KEY}`;
-          fetch(endpoint)
-          .then(result => result.json())
-          .then(result => {
-
-            const directors = result.crew.filter( (member) => member.job === "Director");
-
-            this.setState({
-              actors: result.cast,
-              directors,
-              loading: false
-            })
-          })
-        })
+        return;
       }
-    })
-    .catch(error => console.error('Error:', error))
+
+      this.setState({ movie: result.data });
+      let creditsResults = await axios.get(creditsEndpoint);
+
+      // loop through results and filter directors
+      const directors = creditsResults.data.crew.filter( (member) => member.job === "Director")
+
+      this.setState({
+        actors: creditsResults.data.cast,
+        directors,
+        loading: false
+      })
+    }
+    catch (e) {
+      console.log("There was an error ", e);
+    }
   }
 
   render() {

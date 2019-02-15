@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import {
   API_URL,
   API_KEY,
@@ -44,26 +45,26 @@ class Home extends Component {
     }
   }
 
-  fetchItems = endpoint => {
-    fetch(endpoint)
-      .then(endpoint)
-      .then(res => res.json())
-      .then(result => {
-        // console.log(result);
-        this.setState(
-          {
-            movies: [...this.state.movies, ...result.results],
-            heroImage: this.state.heroImage || result.results[0], // if this.state.heroImage is null, use result.result[0]
-            loading: false,
-            currentPage: result.page,
-            totalPages: result.total_pages
-          },
-          () => {
-            if (this.state.searchTerm === '')
-              localStorage.setItem('MoviesDB', JSON.stringify(this.state));
-          }
-        );
-      });
+  fetchItems = async endpoint => {
+    const { movies, heroImage, searchTerm } = this.state;
+    
+    try {
+      let results = await axios.get(endpoint);
+      
+      this.setState({
+        movies: [...movies, ...results.data.results],
+        heroImage: heroImage || results.data.results[0], // if this.state.heroImage is null, use result.result[0]
+        loading: false,
+        currentPage: results.data.page,
+        totalPages: results.data.total_pages
+      }, () => {
+          if (searchTerm === '')
+            localStorage.setItem('MoviesDB', JSON.stringify(this.state));
+      })
+    }
+    catch (e) {
+      console.log("There was an error: ", e)
+    }
   };
 
   loadMoreItems = () => {
@@ -111,7 +112,7 @@ class Home extends Component {
 
     return (
       <div className="rmdb-home">
-        {loading ? <Spinner /> : null}
+        {/* {loading ? <Spinner /> : null} */}
         {this.state.heroImage ? (
           <div>
             <HeroImage
@@ -145,6 +146,7 @@ class Home extends Component {
               );
             })}
           </FourColGrid>
+          {loading ? <Spinner /> : null}
           {currentPage < totalPages && !loading ? (
             <LoadMoreBtn text="Load More" onClick={this.loadMoreItems} />
           ) : null}
