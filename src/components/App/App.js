@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import Home from '../../containers/HomeContainer';
+import Movie from '../../containers/MovieContainer';
 import Header from '../elements/Header/Header';
 import NotFound from '../elements/NotFound/NotFound';
-import Movie from '../Movie/Movie';
 
 const App = () => {
   return (

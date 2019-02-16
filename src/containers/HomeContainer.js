@@ -14,14 +14,9 @@ class HomeContainer extends Component {
   componentDidMount() {
     this.getMovies();
   }
-  
-  componentDidUpdate() {
-    // console.log('searchterm ', this.props.home.movies)
-  }
-  
+
   getMovies = () => {
     const popularEP = this.generateEndpoint("movie/popular")(false)("");
-    console.log(popularEP);
     this.props.showLoadingSpinner();
     this.props.getPopularMovies(popularEP);
   }
