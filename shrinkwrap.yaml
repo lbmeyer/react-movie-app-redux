@@ -4,8 +4,12 @@ dependencies:
   react: 16.8.1
   react-dom: 16.8.1
   react-fontawesome: 1.6.1
+  react-redux: 6.0.0
   react-router-dom: 4.3.1
   react-scripts: 2.1.5
+  redux: 4.0.1
+  redux-promise: 0.6.0
+  redux-thunk: 2.3.0
 packages:
   /@babel/code-frame/7.0.0:
     dependencies:
@@ -4061,6 +4065,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3Z4XhFZ3992uIq0XOqb9AreonueSYphE6oYbpt5+3u06JWklbsPkNv3ZKkP9Bz/r+1MWCaMoSQ28P85+1Yc77w==
+  /flux-standard-action/2.0.3:
+    dependencies:
+      lodash: 4.17.11
+    dev: false
+    resolution:
+      integrity: sha512-HR2IjMkqJreoFm1Hx7hmMAtUFeo+ad8hPMYPo8o3YSWjbSq0sMwuXMbv4giB3TXngYB7+svkAJewQwwvwsE6xw==
   /follow-redirects/1.6.1:
     dependencies:
       debug: 3.1.0
@@ -4553,6 +4563,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
+  /hoist-non-react-statics/3.3.0:
+    dependencies:
+      react-is: 16.8.2
+    dev: false
+    resolution:
+      integrity: sha512-0XsbTXxgiaCDYDIWFcwkmerZPSwywfUqYmwT4jzewKTQSWoE6FCMoUVOeBJWK3E/CrWbxRG3m5GzY4lnIwGRBA==
   /home-or-tmp/2.0.0:
     dependencies:
       os-homedir: 1.0.2
@@ -7902,7 +7918,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
-      react-is: 16.8.1
+      react-is: 16.8.2
     dev: false
     resolution:
       integrity: sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8127,6 +8143,24 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ioMCzVDWvCvKD8eeT+iukyWrBGrA3DiFYkXfBsVYIRdaREZuBjENG+KjrikavCLasozqRWTwFUagU/O4vPpRMA==
+  /react-is/16.8.2:
+    dev: false
+    resolution:
+      integrity: sha512-D+NxhSR2HUCjYky1q1DwpNUD44cDpUXzSmmFyC3ug1bClcU/iDNy0YNn1iwme28fn+NFhpA13IndOd42CrFb+Q==
+  /react-redux/6.0.0:
+    dependencies:
+      '@babel/runtime': 7.3.1
+      hoist-non-react-statics: 3.3.0
+      invariant: 2.2.4
+      loose-envify: 1.4.0
+      prop-types: 15.7.2
+      react-is: 16.8.2
+    dev: false
+    peerDependencies:
+      react: ^16.4.0-0
+      redux: ^2.0.0 || ^3.0.0 || ^4.0.0-0
+    resolution:
+      integrity: sha512-EmbC3uLl60pw2VqSSkj6HpZ6jTk12RMrwXMBdYtM6niq0MdEaRq9KYCwpJflkOZj349BLGQm1MI/JO1W96kLWQ==
   /react-router-dom/4.3.1:
     dependencies:
       history: 4.7.2
@@ -8317,6 +8351,24 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
+  /redux-promise/0.6.0:
+    dependencies:
+      flux-standard-action: 2.0.3
+      is-promise: 2.1.0
+    dev: false
+    resolution:
+      integrity: sha512-R2mGxJbPFgXyCNbFDE6LjTZhCEuACF54g1bxld3nqBhnRMX0OsUyWk77moF7UMGkUdl5WOAwc4BC5jOd1dunqQ==
+  /redux-thunk/2.3.0:
+    dev: false
+    resolution:
+      integrity: sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
+  /redux/4.0.1:
+    dependencies:
+      loose-envify: 1.4.0
+      symbol-observable: 1.2.0
+    dev: false
+    resolution:
+      integrity: sha512-R7bAtSkk7nY6O/OYMVR9RiBI+XghjF9rlbl5806HJbQph0LJVHZrU5oaO4q70eUKiqMRqm4y07KLTlMZ2BlVmg==
   /regenerate-unicode-properties/7.0.0:
     dependencies:
       regenerate: 1.4.0
@@ -9357,6 +9409,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-GBkJbnTuFpM4jFbiERHDWhZc/S/kpHToqmZag3aEBjPYK44JAN2QBjvrGIxLOoCyMZjuFQIfTO2eJd8uwLY/9g==
+  /symbol-observable/1.2.0:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
   /symbol-tree/3.2.2:
     dev: false
     resolution:
@@ -10386,5 +10444,9 @@ specifiers:
   react: ^16.8.1
   react-dom: ^16.8.1
   react-fontawesome: ^1.6.1
+  react-redux: ^6.0.0
   react-router-dom: ^4.3.1
   react-scripts: 2.1.5
+  redux: ^4.0.1
+  redux-promise: ^0.6.0
+  redux-thunk: ^2.3.0
